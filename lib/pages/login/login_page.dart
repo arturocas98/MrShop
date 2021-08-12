@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:mr_shop/utils/my_colors.dart';
 
 class LoginPage extends StatefulWidget {
@@ -16,10 +17,11 @@ class _LoginPageState extends State<LoginPage> {
       width: double.infinity,
       child: Stack(children: [
         Positioned(top: -80, left: -100, child: _circleLogin()),
-        Positioned(top:60,left:25,child: _textLogin()),
+        Positioned(top: 60, left: 25, child: _textLogin()),
         Column(
           children: [
-            _imageBanner(),
+            /*_imageBanner(),*/
+            _lottieAnimation(),
             _textFieldCorreo(),
             _textFieldPassword(),
             _buttonLogin(),
@@ -32,11 +34,11 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _textLogin() {
     return Text(
-        'Login',
+      'Login',
       style: TextStyle(
-        color: Colors.white,
-        fontWeight: FontWeight.bold,
-        fontSize: 22
+          color: Colors.white, fontWeight:
+          FontWeight.bold, fontSize: 22,
+          fontFamily: ('NimbusSans')
       ),
     );
   }
@@ -51,15 +53,20 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  Widget _lottieAnimation() {
+    return Container(
+      margin: EdgeInsets.only(
+          top: 150, bottom: MediaQuery.of(context).size.height * 0.05),
+      child: Lottie.asset('assets/json/delivery.json',
+          width: 350, height: 200, fit: BoxFit.fill),
+    );
+  }
+
   Widget _imageBanner() {
     return Container(
       margin: EdgeInsets.only(
           top: 100, bottom: MediaQuery.of(context).size.height * 0.12),
-      child: Image.asset(
-        'assets/img/delivery.png',
-        width: 200,
-        height: 200,
-      ),
+      child: Image.asset('assets/img/delivery.png', width: 200, height: 200),
     );
   }
 
