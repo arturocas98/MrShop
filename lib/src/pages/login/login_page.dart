@@ -1,35 +1,59 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:lottie/lottie.dart';
+import 'package:mr_shop/src/pages/login/LoginController.dart';
 import 'package:mr_shop/utils/my_colors.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  const LoginPage({Key key}) : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
+  LoginController loginController = new LoginController();
+
+  bool _obscureText = true;
+
+  void _showPassword() {
+    setState(() {
+      _obscureText = !_obscureText;
+
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      loginController.init(context);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
+        body: SingleChildScrollView(
+          child: Container(
       width: double.infinity,
       child: Stack(children: [
-        Positioned(top: -80, left: -100, child: _circleLogin()),
-        Positioned(top: 60, left: 25, child: _textLogin()),
-        Column(
-          children: [
-            /*_imageBanner(),*/
-            _lottieAnimation(),
-            _textFieldCorreo(),
-            _textFieldPassword(),
-            _buttonLogin(),
-            _textNoTieneCuenta()
-          ],
-        ),
+          Positioned(top: -80, left: -100, child: _circleLogin()),
+          Positioned(top: 60, left: 25, child: _textLogin()),
+          Column(
+            children: [
+              /*_imageBanner(),*/
+              _lottieAnimation(),
+              _textFieldCorreo(),
+              _textFieldPassword(),
+              _buttonLogin(),
+              _textNoTieneCuenta()
+            ],
+          ),
       ]),
-    ));
+    ),
+        ));
   }
 
   Widget _textLogin() {
@@ -77,6 +101,8 @@ class _LoginPageState extends State<LoginPage> {
           color: MyColors.primaryOpacityColor,
           borderRadius: BorderRadius.circular(30)),
       child: TextField(
+        keyboardType: TextInputType.emailAddress,
+        controller: loginController.emailController,
         decoration: InputDecoration(
             hintText: 'Correo electrónico',
             hintStyle: TextStyle(
@@ -99,6 +125,7 @@ class _LoginPageState extends State<LoginPage> {
           color: MyColors.primaryOpacityColor,
           borderRadius: BorderRadius.circular(30)),
       child: TextField(
+        controller: loginController.passworController,
         decoration: InputDecoration(
             hintText: 'Contraseña',
             hintStyle: TextStyle(
@@ -106,11 +133,14 @@ class _LoginPageState extends State<LoginPage> {
             ),
             border: InputBorder.none,
             contentPadding: EdgeInsets.all(15),
-            suffixIcon: Icon(
-              Icons.visibility,
-              color: MyColors.primaryColor,
+            suffixIcon: GestureDetector(
+              onTap: _showPassword,
+              child: Icon(
+                _obscureText ?Icons.visibility : Icons.visibility_off,
+                color: MyColors.primaryColor,
+              ),
             )),
-        obscureText: true,
+        obscureText: _obscureText,
       ),
     );
   }
@@ -120,7 +150,7 @@ class _LoginPageState extends State<LoginPage> {
       width: double.infinity,
       margin: EdgeInsets.symmetric(horizontal: 50, vertical: 35),
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: loginController.loginButton,
         child: Text('Ingresar'),
         style: ElevatedButton.styleFrom(
             primary: MyColors.primaryColor,
@@ -132,22 +162,25 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _textNoTieneCuenta() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          'No tienes cuenta?',
-          style: TextStyle(color: MyColors.primaryColor),
-        ),
-        SizedBox(
-          width: 7,
-        ),
-        Text(
-          'Registrate',
-          style: TextStyle(
-              fontWeight: FontWeight.bold, color: MyColors.primaryColor),
-        )
-      ],
+    return GestureDetector(
+      onTap: loginController.goinToRegisterPage,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'No tienes cuenta?',
+            style: TextStyle(color: MyColors.primaryColor),
+          ),
+          SizedBox(
+            width: 7,
+          ),
+          Text(
+            'Registrate',
+            style: TextStyle(
+                fontWeight: FontWeight.bold, color: MyColors.primaryColor),
+          )
+        ],
+      ),
     );
   }
 }
