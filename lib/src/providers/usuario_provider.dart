@@ -36,6 +36,30 @@ class UsuarioProvider{
 
   }
 
+  Future<ResponseApi>login(email,password)async{
+
+    try{
+      Uri url = Uri.http(_url, '$_api/login');
+      String bodyParams = json.encode({
+        'email': email,
+        'password':password
+      });
+      Map<String,String>headers ={
+        'Content-type':'application/json'
+      };
+      final res = await http.post(url,headers: headers,body: bodyParams);
+      final data = json.decode(res.body);
+      print("data user provider: $data ");
+      ResponseApi responseApi = ResponseApi.fromJson(data);
+      return responseApi;
+
+    }catch(error){
+      print('Error usuario provider : $error');
+      return null;
+    }
+
+  }
+
 
 
 }

@@ -16,6 +16,7 @@ class Usuario {
   String telefono;
   String password;
   String imagen;
+  String token;
 
   Usuario({
     this.id,
@@ -25,6 +26,7 @@ class Usuario {
     this.telefono,
     this.password,
     this.imagen,
+    this.token
   });
 
 
@@ -37,6 +39,7 @@ class Usuario {
     telefono: json["telefono"],
     password: json["password"],
     imagen: json["imagen"],
+    token: json["token"]
   );
 
   Map<String, dynamic> toJson() => {
@@ -47,5 +50,6 @@ class Usuario {
     "telefono": telefono,
     "password": password,
     "imagen": imagen,
+    "token":token
   };
 }

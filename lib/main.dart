@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mr_shop/src/pages/client/products/list/product_list_page.dart';
 import 'package:mr_shop/src/pages/login/login_page.dart';
 import 'package:mr_shop/src/pages/register/register_page.dart';
 import 'package:mr_shop/utils/my_colors.dart';
@@ -22,7 +23,8 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       routes:{
        'login': (BuildContext context) => LoginPage(),
-        'register': (BuildContext context) => RegisterPage()
+        'register': (BuildContext context) => RegisterPage(),
+        'client/products/list': (BuildContext context) => ProductListPage()
       },
       theme: (
         ThemeData(
