@@ -17,7 +17,11 @@ class LoginController{
     Usuario usuario =  Usuario.fromJson(await _sharedPreference.read('usuario')?? {});
 
     if(usuario?.token != null){
-      Navigator.pushNamedAndRemoveUntil(context, 'client/products/list', (route) => false);
+      if(usuario.roles.length > 1){
+        Navigator.pushNamedAndRemoveUntil(context, 'roles', (route) => false);
+      }else{
+        Navigator.pushNamedAndRemoveUntil(context, usuario.roles[0].ruta, (route) => false);
+      }
     }
   }
 
@@ -28,18 +32,27 @@ class LoginController{
   void loginButton()async{
     String email = emailController.text.trim();
     String password = passworController.text.trim();
-    ResponseApi responseApi =  await usuarioProvider.login(email, password);
-    print("Response Api ${responseApi.toJson()}");
+    if( email != '' && password != ''){
+      ResponseApi responseApi =  await usuarioProvider.login(email, password);
+      print("Response Api ${responseApi.toJson()}");
 
-    if(responseApi.success){
-      Usuario usuario = Usuario.fromJson(responseApi.data);
-      _sharedPreference.save('usuario', usuario.toJson());
-      Navigator.pushNamedAndRemoveUntil(context, 'client/products/list', (route) => false);
+      if(responseApi.success){
+        Usuario usuario = Usuario.fromJson(responseApi.data);
+        _sharedPreference.save('usuario', usuario.toJson());
+
+        if(usuario.roles.length > 1){
+          Navigator.pushNamedAndRemoveUntil(context, 'roles', (route) => false);
+        }else{
+          Navigator.pushNamedAndRemoveUntil(context, usuario.roles[0].ruta, (route) => false);
+        }
+
+      }else{
+        MySnackBar.show(context, responseApi.message);
+      }
+      print('email: $email');
+      print('password: $password');
     }else{
-      MySnackBar.show(context, responseApi.message);
+      MySnackBar.show(context,'Ingrese el usuario y contraseña');
     }
-    print('email: $email');
-    print('password: $password');
-
   }
 }

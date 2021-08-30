@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mr_shop/src/pages/client/products/list/product_list_page.dart';
+import 'package:mr_shop/src/pages/delivery/orders/list/delivery_orders_list_page.dart';
 import 'package:mr_shop/src/pages/login/login_page.dart';
 import 'package:mr_shop/src/pages/register/register_page.dart';
+import 'package:mr_shop/src/pages/roles/roles_page.dart';
+import 'package:mr_shop/src/pages/store/orders/list/store_orders_list_page.dart';
 import 'package:mr_shop/utils/my_colors.dart';
 
 void main() {
@@ -24,7 +27,10 @@ class _MyAppState extends State<MyApp> {
       routes:{
        'login': (BuildContext context) => LoginPage(),
         'register': (BuildContext context) => RegisterPage(),
-        'client/products/list': (BuildContext context) => ProductListPage()
+        'client/products/list': (BuildContext context) => ProductListPage(),
+        'store/orders/list': (BuildContext context) => StoreOrdersListPage(),
+        'delivery/orders/list': (BuildContext context) => DeliveryOrdersListPage(),
+        'roles': (BuildContext context) => RolesPage()
       },
       theme: (
         ThemeData(
