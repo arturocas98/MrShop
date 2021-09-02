@@ -5,6 +5,7 @@ import 'package:mr_shop/src/api/environment.dart';
 import 'package:mr_shop/src/models/response_api.dart';
 import 'package:mr_shop/src/models/usuario.dart';
 import 'package:http/http.dart' as http;
+import 'package:mr_shop/utils/my_snackbar.dart';
 
 class UsuarioProvider{
   String _url = Environment.API_MR_SHOP;
@@ -31,6 +32,7 @@ class UsuarioProvider{
 
     }catch(error){
       print('Error usuario provider : $error');
+      MySnackBar.show(context, 'Error no se ha podido conectar con el servidor');
       return null;
     }
 
