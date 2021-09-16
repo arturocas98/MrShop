@@ -19,7 +19,6 @@ class _LoginPageState extends State<LoginPage> {
   void _showPassword() {
     setState(() {
       _obscureText = !_obscureText;
-
     });
   }
 
@@ -36,9 +35,9 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: SingleChildScrollView(
-          child: Container(
-      width: double.infinity,
-      child: Stack(children: [
+      child: Container(
+        width: double.infinity,
+        child: Stack(children: [
           Positioned(top: -80, left: -100, child: _circleLogin()),
           Positioned(top: 60, left: 25, child: _textLogin()),
           Column(
@@ -51,19 +50,19 @@ class _LoginPageState extends State<LoginPage> {
               _textNoTieneCuenta()
             ],
           ),
-      ]),
-    ),
-        ));
+        ]),
+      ),
+    ));
   }
 
   Widget _textLogin() {
     return Text(
       'Login',
       style: TextStyle(
-          color: Colors.white, fontWeight:
-          FontWeight.bold, fontSize: 22,
-          fontFamily: ('NimbusSans')
-      ),
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 22,
+          fontFamily: ('NimbusSans')),
     );
   }
 
@@ -136,7 +135,7 @@ class _LoginPageState extends State<LoginPage> {
             suffixIcon: GestureDetector(
               onTap: _showPassword,
               child: Icon(
-                _obscureText ?Icons.visibility : Icons.visibility_off,
+                _obscureText ? Icons.visibility : Icons.visibility_off,
                 color: MyColors.primaryColor,
               ),
             )),
