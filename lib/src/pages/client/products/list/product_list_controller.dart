@@ -13,7 +13,6 @@ class ProductListController{
   Future init(BuildContext context,Function refresh)async{
     this.context = context;
     usuario = Usuario.fromJson(await _sharedPreference.read('usuario'));
-    print(usuario.nombre);
     this.refresh = refresh;
     refresh();
   }

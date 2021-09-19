@@ -30,6 +30,7 @@ class LoginController{
   }
 
   void loginButton()async{
+    print("entro");
     String email = emailController.text.trim();
     String password = passworController.text.trim();
     if( email != '' && password != ''){

@@ -105,6 +105,7 @@ class _ProductListPageState extends State<ProductListPage> {
               )
           ),
           ListTile(
+            onTap: (){ Navigator.pushNamed(context, 'client/update'); },
             title: Text('Editar Perfil'),
             trailing: Icon(Icons.edit_outlined),
           ),

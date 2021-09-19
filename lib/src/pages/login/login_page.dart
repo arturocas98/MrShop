@@ -150,7 +150,7 @@ class _LoginPageState extends State<LoginPage> {
       margin: EdgeInsets.symmetric(horizontal: 50, vertical: 35),
       child: ElevatedButton(
         onPressed: loginController.loginButton,
-        child: Text('Ingresar'),
+        child: Text('Iniciar sesión'),
         style: ElevatedButton.styleFrom(
             primary: MyColors.primaryColor,
             shape:
