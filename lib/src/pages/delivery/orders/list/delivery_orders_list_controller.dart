@@ -19,7 +19,7 @@ class DeliveryOrdersListController{
   }
 
   void logout()async{
-    _sharedPreference.remove('usuario');
+    _sharedPreference.logout(context,usuario.id);
     Navigator.pushNamedAndRemoveUntil(context, 'login', (route) => false);
   }
 

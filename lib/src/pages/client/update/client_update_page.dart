@@ -43,6 +43,7 @@ class _ClientUpdatePageState extends State<ClientUpdatePage> {
         title: Text(
             "Editar Perfil"
         ),
+        backgroundColor: MyColors.primaryColor,
       ),
       body: Container(
         width: double.infinity,

@@ -18,7 +18,7 @@ class _ProductListPageState extends State<ProductListPage> {
     // TODO: implement initState
     super.initState();
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-      _productListController.init(context,refresh);
+      _productListController.init(context, refresh);
     });
   }
 
@@ -28,12 +28,18 @@ class _ProductListPageState extends State<ProductListPage> {
       key: _productListController.key,
       appBar: AppBar(
         leading: _menuDrawer(),
+        backgroundColor: MyColors.primaryColor,
       ),
       drawer: _drawer(),
       body: Center(
           child: ElevatedButton(
+
         onPressed: _productListController.logout,
         child: Text('Cerrar Sesión'),
+            style:ElevatedButton.styleFrom(
+              primary:MyColors.primaryColor
+            )
+
       )),
     );
   }
@@ -63,7 +69,7 @@ class _ProductListPageState extends State<ProductListPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '${ _productListController.usuario?.nombre ?? '' } ${ _productListController.usuario?.apellido ?? ''}  ',
+                    '${_productListController.usuario?.nombre ?? ''} ${_productListController.usuario?.apellido ?? ''}  ',
                     style: TextStyle(
                         fontSize: 18,
                         color: Colors.white,
@@ -72,9 +78,9 @@ class _ProductListPageState extends State<ProductListPage> {
                   Text(
                     _productListController.usuario?.email ?? '',
                     style: TextStyle(
-                        fontSize: 13,
-                        color: Colors.grey[200],
-                        fontWeight: FontWeight.bold,
+                      fontSize: 13,
+                      color: Colors.grey[200],
+                      fontWeight: FontWeight.bold,
                       fontStyle: FontStyle.italic,
                     ),
                     maxLines: 1,
@@ -94,18 +100,19 @@ class _ProductListPageState extends State<ProductListPage> {
                     margin: EdgeInsets.only(top: 10),
                     child: FadeInImage(
                       image: _productListController.usuario?.imagen != null
-                            ? NetworkImage(_productListController.usuario?.imagen)
-                            :AssetImage('assets/img/no-image.png'),
+                          ? NetworkImage(_productListController.usuario?.imagen)
+                          : AssetImage('assets/img/no-image.png'),
                       fit: BoxFit.contain,
                       fadeInDuration: Duration(milliseconds: 50),
                       placeholder: AssetImage('assets/img/no-image.png'),
                     ),
                   )
                 ],
-              )
-          ),
+              )),
           ListTile(
-            onTap: (){ Navigator.pushNamed(context, 'client/update'); },
+            onTap: () {
+              Navigator.pushNamed(context, 'client/update');
+            },
             title: Text('Editar Perfil'),
             trailing: Icon(Icons.edit_outlined),
           ),
@@ -113,27 +120,29 @@ class _ProductListPageState extends State<ProductListPage> {
             title: Text('Mis pedidos'),
             trailing: Icon(Icons.shopping_cart_outlined),
           ),
-          _productListController.usuario != null ?
-          _productListController.usuario.roles.length > 1 ?
-          ListTile(
-            onTap: (){ Navigator.pushNamedAndRemoveUntil(context, 'roles', (route) => false); },
-            title: Text('Seleccionar rol'),
-            trailing: Icon(Icons.person_outlined),
-          ):Container():Container(),
+          _productListController.usuario != null
+              ? _productListController.usuario.roles.length > 1
+                  ? ListTile(
+                      onTap: () {
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, 'roles', (route) => false);
+                      },
+                      title: Text('Seleccionar rol'),
+                      trailing: Icon(Icons.person_outlined),
+                    )
+                  : Container()
+              : Container(),
           ListTile(
             onTap: _productListController.logout,
             title: Text('Cerrar sesión'),
             trailing: Icon(Icons.power_settings_new),
           ),
-
         ],
       ),
     );
   }
 
-  void refresh(){
-    setState(() {
-
-    });
+  void refresh() {
+    setState(() {});
   }
 }

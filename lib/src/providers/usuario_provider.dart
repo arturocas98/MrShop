@@ -2,11 +2,13 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mr_shop/src/api/environment.dart';
 import 'package:mr_shop/src/models/response_api.dart';
 import 'package:mr_shop/src/models/usuario.dart';
 import 'package:http/http.dart' as http;
 import 'package:mr_shop/utils/my_snackbar.dart';
+import 'package:mr_shop/utils/shared_preference.dart';
 
 /* Para usar el basename en el método createWithImage
   se debe utilizar este paquete */
@@ -19,19 +21,25 @@ class UsuarioProvider{
   String _url = '/api/usuarios';
   BuildContext context;
   ProgressDialog _progressDialog;
-
-  Future init(BuildContext context){
+  Usuario sessionUser;
+  Future init(BuildContext context,{Usuario sessionUser}){
     this.context = context;
     _progressDialog = ProgressDialog(context: context);
+    this.sessionUser = sessionUser;
   }
 
   Future<Usuario> getUserById(String id)async{
     try{
       Uri uri = Uri.http(_api, '$_url/findById/$id');
       Map<String,String>headers ={
-        'Content-type':'application/json'
+        'Content-type':'application/json',
+        'Authorization':sessionUser.token
       };
       final res =  await http.get(uri,headers:headers);
+      if(res.statusCode == 401){
+        Fluttertoast.showToast(msg: "La sesión expiro");
+        new SharedPreference().logout(context,id);
+      }
       final data = json.decode(res.body);
       Usuario usuario = Usuario.fromJson(data);
       return usuario;
@@ -97,6 +105,7 @@ class UsuarioProvider{
 
       Uri url = Uri.http(_api, '$_url/update');
       final request = http.MultipartRequest('PUT',url);
+      request.headers['Authorization'] = sessionUser.token;
       if(imagen != null){
         request.files.add(http.MultipartFile(
             'imagen',
@@ -107,8 +116,13 @@ class UsuarioProvider{
       }
 
       request.fields['usuario'] = json.encode(usuario);
+      print("request update: ${request}");
       /*Enviar la petición a nodejs*/
       final response = await request.send();
+      if(response.statusCode == 401){
+        Fluttertoast.showToast(msg: "La sesión expiro");
+        new SharedPreference().logout(context,usuario.id);
+      }
       return response.stream.transform(utf8.decoder);
 
 
@@ -150,6 +164,28 @@ class UsuarioProvider{
       return null;
     }
 
+  }
+
+
+  Future<ResponseApi> logout(String idUser) async {
+    try {
+      Uri url = Uri.http(_api, '$_url/logout');
+      String bodyParams = json.encode({
+        'id' : idUser
+      });
+      Map<String, String> headers = {
+        'Content-type': 'application/json'
+      };
+      final res = await http.post(url, headers: headers, body: bodyParams);
+      final data = json.decode(res.body);
+      ResponseApi responseApi = ResponseApi.fromJson(data);
+      Fluttertoast.showToast(msg: responseApi.message);
+      return responseApi;
+    }
+    catch(e) {
+      print('Error: $e');
+      return null;
+    }
   }
 
 

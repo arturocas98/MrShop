@@ -29,8 +29,11 @@ class ClientUpdateController{
 
   Future init(BuildContext context,Function refresh)async{
     this.context = context;
-    usuarioProvider.init(context);
+    this.refresh = refresh;
+
     usuario = Usuario.fromJson(await _sharedPreference.read('usuario'));
+    print("usuario: $usuario");
+    usuarioProvider.init(context,sessionUser:usuario);
 
     /*Set user data in text editing*/
     nombresController.text = usuario.nombre;
@@ -38,7 +41,6 @@ class ClientUpdateController{
     telefonoController.text = usuario.telefono;
 
 
-    this.refresh = refresh;
     _progressDialog = ProgressDialog(context: context);
     refresh();
   }
@@ -57,10 +59,10 @@ class ClientUpdateController{
 
 
 
-    if(imageFile == null){
+    /*if(imageFile == null){
       MySnackBar.show(context, "Por favor selecciona una imagen" );
       return;
-    }
+    }*/
 
     _progressDialog.show(max:100,msg:"Espere un momento...");
     is_enable = false;
@@ -69,6 +71,7 @@ class ClientUpdateController{
       nombre: nombres,
       apellido: apellidos,
       telefono: telefono,
+      imagen:this.usuario.imagen
     );
 
     Stream stream = await usuarioProvider.update(usuario, imageFile);
