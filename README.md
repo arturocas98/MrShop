@@ -1,10 +1,10 @@
 # mr_shop
 
-A new Flutter project.
+Proyecto en Flutter tipo delivery utilizando flutter como FrontEnd, Nodejs como BackEnd y PostgreSQL como base de datos.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Una vez descargado el proyecto se debe utilizar el comando Flutter Pub get, en caso de no tener flutter instalado los invito a leer la documentación en los siguientes enlaces:
 
 A few resources to get you started if this is your first Flutter project:
 
