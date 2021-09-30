@@ -103,7 +103,8 @@ class _LoginPageState extends State<LoginPage> {
         keyboardType: TextInputType.emailAddress,
         controller: loginController.emailController,
         decoration: InputDecoration(
-            hintText: 'Correo electrónico',
+            labelText: 'Correo electrónico',
+            hintText: "Ingrese aquí su correo electrónico",
             hintStyle: TextStyle(
               color: MyColors.primaryColorDark,
             ),
@@ -126,7 +127,8 @@ class _LoginPageState extends State<LoginPage> {
       child: TextField(
         controller: loginController.passworController,
         decoration: InputDecoration(
-            hintText: 'Contraseña',
+            labelText:"Contraseña",
+            hintText: 'Ingrese una contraseña segura',
             hintStyle: TextStyle(
               color: MyColors.primaryColorDark,
             ),

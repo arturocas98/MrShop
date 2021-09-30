@@ -125,7 +125,8 @@ class _RegisterPageState extends State<RegisterPage> {
         keyboardType: TextInputType.emailAddress,
         controller: registerController.emailController,
         decoration: InputDecoration(
-            hintText: 'Correo electrónico',
+            labelText: 'Correo electrónico',
+            hintText: 'Ingrese su correo electrónico',
             hintStyle: TextStyle(
               color: MyColors.primaryColorDark,
             ),
@@ -149,7 +150,8 @@ class _RegisterPageState extends State<RegisterPage> {
         keyboardType: TextInputType.text,
         controller: registerController.nombresController,
         decoration: InputDecoration(
-            hintText: 'Nombres',
+            labelText: "Nombres",
+            hintText: 'Ingrese nombres completos',
             hintStyle: TextStyle(
               color: MyColors.primaryColorDark,
             ),
@@ -173,7 +175,8 @@ class _RegisterPageState extends State<RegisterPage> {
         keyboardType: TextInputType.text,
         controller: registerController.apellidosController,
         decoration: InputDecoration(
-            hintText: 'Apellidos',
+            labelText: "Apellidos",
+            hintText: 'Ingrese sus apellidos completos',
             hintStyle: TextStyle(
               color: MyColors.primaryColorDark,
             ),
@@ -197,7 +200,8 @@ class _RegisterPageState extends State<RegisterPage> {
         keyboardType: TextInputType.phone,
         controller: registerController.telefonoController,
         decoration: InputDecoration(
-            hintText: 'Teléfono',
+            labelText: "Teléfono",
+            hintText: 'Ingrese su teléfono',
             hintStyle: TextStyle(
               color: MyColors.primaryColorDark,
             ),
@@ -220,7 +224,8 @@ class _RegisterPageState extends State<RegisterPage> {
       child: TextField(
         controller: registerController.passwordController,
         decoration: InputDecoration(
-            hintText: 'Contraseña',
+            labelText: 'Contraseña',
+            hintText: 'Ingrese su contraseña',
             hintStyle: TextStyle(
               color: MyColors.primaryColorDark,
             ),
@@ -247,7 +252,8 @@ class _RegisterPageState extends State<RegisterPage> {
       child: TextField(
         controller: registerController.confirmPasswordController,
         decoration: InputDecoration(
-            hintText: 'Confirmar contraseña',
+            labelText: 'Confirmar contraseña',
+            hintText: 'Confirme su contraseña',
             hintStyle: TextStyle(
               color: MyColors.primaryColorDark,
             ),

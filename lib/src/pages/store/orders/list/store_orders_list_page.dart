@@ -28,6 +28,7 @@ class _StoreOrdersListPageState extends State<StoreOrdersListPage> {
       key: _storeOrdersListController.key,
       appBar: AppBar(
         leading: _menuDrawer(),
+        backgroundColor: MyColors.primaryColor,
       ),
       drawer: _drawer(),
       body: Center(
@@ -105,14 +106,14 @@ class _StoreOrdersListPageState extends State<StoreOrdersListPage> {
                 ],
               )
           ),
-          ListTile(
+         /* ListTile(
             title: Text('Editar Perfil'),
             trailing: Icon(Icons.edit_outlined),
           ),
           ListTile(
             title: Text('Mis pedidos'),
             trailing: Icon(Icons.shopping_cart_outlined),
-          ),
+          ),*/
           _storeOrdersListController.usuario != null ?
           _storeOrdersListController.usuario.roles.length > 1 ?
           ListTile(
@@ -120,6 +121,11 @@ class _StoreOrdersListPageState extends State<StoreOrdersListPage> {
             title: Text('Seleccionar rol'),
             trailing: Icon(Icons.person_outlined),
           ):Container():Container(),
+          ListTile(
+            onTap: (){ Navigator.pushNamed(context, 'store/categorie/create');},
+            title: Text('Categoria'),
+            trailing: Icon(Icons.list_alt),
+          ),
           ListTile(
             onTap: _storeOrdersListController.logout,
             title: Text('Cerrar sesión'),
