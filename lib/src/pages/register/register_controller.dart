@@ -92,16 +92,7 @@ class RegisterController{
 
     });
 
-
-
     /*print('respuesta: ${responseApi.toJson()} ');*/
-
-    print('email $email');
-    print('nombres $nombres');
-    print('apellidos $apellidos');
-    print('telefono $telefono');
-    print('password $password');
-    print('confirmPassword $confirmPassword');
 
   }
 
@@ -110,7 +101,10 @@ class RegisterController{
   }
 
   Future selectImage(ImageSource imageSource)async{
+    /*Guarda en un atributo de tipo picked el método de seleccion ya sea
+    * cámara o galeria*/
     pickedFile = await ImagePicker().getImage(source: imageSource);
+
     if(pickedFile != null){
       imageFile = File(pickedFile.path);
     }

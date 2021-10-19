@@ -8,6 +8,7 @@ import 'package:mr_shop/src/pages/register/register_page.dart';
 import 'package:mr_shop/src/pages/roles/roles_page.dart';
 import 'package:mr_shop/src/pages/store/categories/create/store_categorie_create_page.dart';
 import 'package:mr_shop/src/pages/store/orders/list/store_orders_list_page.dart';
+import 'package:mr_shop/src/pages/store/products/create/store_products_create_page.dart';
 import 'package:mr_shop/utils/my_colors.dart';
 import 'package:mr_shop/utils/shared_preference.dart';
 
@@ -54,13 +55,14 @@ class _MyAppState extends State<MyApp> {
         'client/update': (BuildContext context) => ClientUpdatePage(),
         'store/orders/list': (BuildContext context) => StoreOrdersListPage(),
         'store/categorie/create': (BuildContext context) => StoreCategorieCreatePage(),
+        'store/products/create': (BuildContext context) => StoreProductsCreatePage(),
         'delivery/orders/list': (BuildContext context) => DeliveryOrdersListPage(),
         'roles': (BuildContext context) => RolesPage()
       },
       theme: (
         ThemeData(
-
-          primaryColor: MyColors.primaryColorDark
+          primaryColor: MyColors.primaryColorDark,
+          appBarTheme: AppBarTheme(elevation:0)
         )
       ),
     );

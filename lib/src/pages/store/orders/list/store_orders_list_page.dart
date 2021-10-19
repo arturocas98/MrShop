@@ -124,6 +124,11 @@ class _StoreOrdersListPageState extends State<StoreOrdersListPage> {
           ListTile(
             onTap: (){ Navigator.pushNamed(context, 'store/categorie/create');},
             title: Text('Categoria'),
+            trailing: Icon(Icons.category_outlined),
+          ),
+          ListTile(
+            onTap: (){ Navigator.pushNamed(context, 'store/products/create');},
+            title: Text('Productos'),
             trailing: Icon(Icons.list_alt),
           ),
           ListTile(

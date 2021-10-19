@@ -17,6 +17,25 @@ class CategoriaProvider{
     this.sessionUser = sessionUser;
   }
 
+  Future<List <Categoria>> getAll()async{
+    try{
+
+      Uri url = Uri.http(_api,'$_url/getAll');
+      Map<String,String> headers ={
+        'Content-type':'application/json',
+        'Authorization':sessionUser.token
+      };
+      final res = await http.get(url,headers:headers);
+      final data = json.decode(res.body);
+      Categoria categoria = Categoria.fromJsonList(data);
+      return categoria.toList;
+
+
+    }catch(err){
+      MySnackBar.show(context, 'Error al obtener las categorias $err');
+    }
+  }
+
   Future<ResponseApi> create(Categoria categoria)async{
     try{
       print("token: ${sessionUser.token}");
