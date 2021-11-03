@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:mr_shop/src/models/categoria.dart';
+import 'package:mr_shop/src/models/producto.dart';
 import 'package:mr_shop/src/pages/client/products/list/product_list_controller.dart';
+import 'package:mr_shop/src/widgets/no_data_widget.dart';
 import 'package:mr_shop/utils/my_colors.dart';
 
 class ProductListPage extends StatefulWidget {
@@ -61,9 +63,39 @@ class _ProductListPageState extends State<ProductListPage> {
             ),
           ),
           drawer: _drawer(),
+          /*return GridView.count(
+            crossAxisCount: 2,
+            childAspectRatio: 0.7,
+            children: List.generate(10, (index){
+          return _cardProduct();
+          }),
+          );*/
           body: TabBarView(
             children: _productListController.categorias.map((Categoria categoria){
-              return _cardProduct();
+              return FutureBuilder(
+                future: _productListController.getProductsByCategorie(categoria.id),
+                builder: (context,AsyncSnapshot<List<Producto>> snapshot) {
+                  if(snapshot.hasData){
+                    if(snapshot.data.length > 0){
+                      return GridView.builder(
+                        padding: EdgeInsets.symmetric(horizontal: 10,vertical: 20),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 0.7
+                        ),
+                        itemCount: snapshot.data?.length ?? 0,
+                        itemBuilder: (_, index) {
+                          return _cardProduct(snapshot.data[index]);
+                        },
+                      );
+                    }else{
+                      return NoDataWidget(text: 'No hay productos');
+                    }
+                  }else {
+                    return NoDataWidget(text: 'No hay productos');
+                  }
+                },
+              );
             }).toList(),
           )
       ),
@@ -127,65 +159,72 @@ class _ProductListPageState extends State<ProductListPage> {
       ),
     );
   }
-  
-  Widget _cardProduct(){
+
+  Widget _cardProduct(Producto producto){
     return Container(
       height: 250,
       child: Card(
         elevation: 3.0,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30)
+            borderRadius: BorderRadius.circular(30)
         ),
         child: Stack(
           children: [
             Positioned(
-              top: -1.0,
-              right: -1.0,
-              child:Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: MyColors.primaryColor,
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(15),
-                    topRight: Radius.circular(30)
-                  )
-                ),
-                child: Icon(Icons.add,color: Colors.white,),
-              )
+                top: -1.0,
+                right: -1.0,
+                child:Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                      color: MyColors.primaryColor,
+                      borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(15),
+                          topRight: Radius.circular(30)
+                      )
+                  ),
+                  child: Icon(Icons.add,color: Colors.white,),
+                )
             ),
             Column(
-             crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                  Container(
-                    height: 150,
-                    width: MediaQuery.of(context).size.width * 0.45,
-                    padding: EdgeInsets.all(20),
-                    child: FadeInImage(
-                      image: AssetImage('assets/img/pizza2.png'),
-                      fit: BoxFit.contain,
-                      fadeInDuration: Duration(milliseconds: 50),
-                      placeholder: AssetImage('assets/img/no-image.png'),
-                    ),
+                Container(
+                  height: 150,
+                  width: MediaQuery.of(context).size.width * 0.45,
+                  margin: EdgeInsets.only(top: 20),
+                  padding: EdgeInsets.all(20),
+                  child: FadeInImage(
+                    image: producto.imagen1 != null?
+                    NetworkImage(producto.imagen1)
+                    :AssetImage('assets/img/pizza2.png'),
+                    fit: BoxFit.contain,
+                    fadeInDuration: Duration(milliseconds: 50),
+                    placeholder: AssetImage('assets/img/no-image.png'),
                   ),
+                ),
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 20),
+                  height: 33,
                   child: Text(
-                    'Nombre del producto',
+                    producto.nombre ?? '',
                     style: TextStyle(
                         fontSize: 15,
                         fontFamily: 'NimbusSans'
                     ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
+                Spacer(),
                 Container(
-                  margin: EdgeInsets.symmetric(horizontal: 20),
+                  margin: EdgeInsets.symmetric(horizontal: 20,vertical: 20),
                   child: Text(
-                      '0.0\$',
+                    '${producto.precio ?? 0}\$',
                     style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'NimbusSans'
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'NimbusSans'
                     ),
                   ),
                 )
@@ -202,7 +241,7 @@ class _ProductListPageState extends State<ProductListPage> {
     return GestureDetector(
       onTap: _productListController.openDrawer,
       child: Container(
-        margin: EdgeInsets.only(left: 20),
+        margin: EdgeInsets.only(left: 20,top: 20),
         alignment: Alignment.centerLeft,
         child: Image.asset(
           'assets/img/menu.png',

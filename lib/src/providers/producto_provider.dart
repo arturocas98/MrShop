@@ -20,6 +20,26 @@ class ProductoProvider{
     this.sessionUser = sessionUser;
   }
 
+  Future<List <Producto>> getByCategoria(String categoria_id)async{
+    try{
+
+      Uri url = Uri.http(_api,'$_url/getByCategoria/$categoria_id');
+      Map<String,String> headers ={
+        'Content-type':'application/json',
+        'Authorization':sessionUser.token
+      };
+      final res = await http.get(url,headers:headers);
+      final data = json.decode(res.body);
+      Producto producto = Producto.fromJsonList(data);
+      return producto.toList;
+
+
+    }catch(err){
+      print("Error al obtener las productos $err");
+      MySnackBar.show(context, 'Error al obtener las productos $err');
+    }
+  }
+
   Future<Stream> create(Producto producto,List<File> imagenes)async{
     try{
 
