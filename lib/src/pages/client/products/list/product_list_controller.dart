@@ -1,9 +1,11 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:mr_shop/src/models/categoria.dart';
 import 'package:mr_shop/src/models/producto.dart';
 import 'package:mr_shop/src/models/usuario.dart';
+import 'package:mr_shop/src/pages/client/products/detail/product_detail_page.dart';
 import 'package:mr_shop/src/providers/categoria_provider.dart';
 import 'package:mr_shop/src/providers/producto_provider.dart';
 import 'package:mr_shop/utils/shared_preference.dart';
@@ -44,6 +46,14 @@ class ProductListController{
 
   void openDrawer(){
     key.currentState.openDrawer();
+  }
+
+  /*Abre modal de detalle del producto*/
+  void openModal(Producto producto){
+    showMaterialModalBottomSheet(
+        context: context,
+        builder: (context) => ProductDetailPage(producto: producto,)
+    );
   }
 
 }
