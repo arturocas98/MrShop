@@ -42,8 +42,8 @@ class Producto {
     imagen2: json["imagen2"],
     imagen3: json["imagen3"],
     //precio: json["precio"].toDouble(),
-    precio: json["precio"] is String ? double.parse(json["precio"]):
-    isInteger(json["precio"])? json["precio"].toDouble():json["precio"] ,
+    precio: json["precio"] is String ? double.parse(json["precio"]):json["precio"],
+    //isInteger(json["precio"])? json["precio"].toDouble():json["precio"] ,
     categoriaId: json["categoria_id"] is String? int.parse(json["categoria_id"]):json["categoria_id"],
     cantidad: json["cantidad"],
   );

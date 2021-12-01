@@ -41,7 +41,7 @@ class _IntroductionPageState extends State<IntroductionPage> {
         PageViewModel(
           title: "Lo empacamos por ti",
           body:
-          "Instead of having to buy an entire share, invest any amount you want.",
+          "Donde quiera que te encuentres, pidelo nosotros te lo llevamos!.",
           image: _buildImage('intro2.jpg'),
         ),
       ],
@@ -56,7 +56,10 @@ class _IntroductionPageState extends State<IntroductionPage> {
   }
 
   Widget _buildImage(String assetName, [double width = 350]) {
-    return Image.asset('assets/img/$assetName', width: width);
+    return Container(
+        margin: EdgeInsets.only(top: 20),
+        child:Image.asset('assets/img/$assetName', width: width)
+    );
   }
 
 }
